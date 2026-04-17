@@ -2,6 +2,8 @@
 using Google.Protobuf.WellKnownTypes;
 using Google.Rpc;
 using Grpc.Core;
+using GoogleStatus = Google.Rpc.Status;
+using GrpcStatus = Grpc.Core.Status;
 
 namespace Discount.Application.Extensions;
 
@@ -23,7 +25,7 @@ public static class GrpcErrorHelper
         var badRequest = new BadRequest();
         badRequest.FieldViolations.AddRange(fieldViolations);
 
-        var status = new Google.Rpc.Status
+        var status = new GoogleStatus
         {
             Code = (int)StatusCode.InvalidArgument,
             Message = "Validation Failed",
@@ -35,6 +37,6 @@ public static class GrpcErrorHelper
             { "grpc-status-details-bin", status.ToByteArray() }
         };
 
-        return new RpcException(new Grpc.Core.Status(StatusCode.InvalidArgument, "Validation Errors"), trailers);
+        return new RpcException(new GrpcStatus(StatusCode.InvalidArgument, "Validation Errors"), trailers);
     }
 }

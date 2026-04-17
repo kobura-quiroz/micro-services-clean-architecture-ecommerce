@@ -46,7 +46,7 @@ public class DiscountRepository : IDiscountRepository
         };
     }
 
-    public async Task<bool> UPdateDiscount(Coupon coupon)
+    public async Task<bool> UpdateDiscount(Coupon coupon)
     {
         using var connection = new NpgsqlConnection(_connectionString);
         var affected = await connection.ExecuteAsync(

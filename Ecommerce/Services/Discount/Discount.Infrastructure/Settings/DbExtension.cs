@@ -12,7 +12,8 @@ public static class DbExtension
     {
         var scope = host.Services.CreateScope();
         var services = scope.ServiceProvider;
-        var logger = services.GetRequiredService<ILogger>();
+        var loggerFactory = services.GetRequiredService<ILoggerFactory>();
+        var logger = loggerFactory.CreateLogger("DbMigration");
         var databaseSettings = services.GetRequiredService<IOptions<DatabaseSettings>>().Value;
 
         try
